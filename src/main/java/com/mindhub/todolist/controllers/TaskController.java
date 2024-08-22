@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/task")
 @Tag(name = "Task", description = "API to manage tasks of the user")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class TaskController {
 
     private ITaskService taskService;

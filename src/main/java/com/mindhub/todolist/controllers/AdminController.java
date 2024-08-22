@@ -18,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/api/admin")
 @Tag(name = "Admin", description = "API to manage users and tasks")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private IUserService userService;
