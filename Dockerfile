@@ -5,5 +5,5 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 
 FROM openjdk:17-slim
 COPY --from=build /home/app/target/auth.jar /usr/local/lib/auth.jar
-EXPOSE 5500
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/auth.jar"]
