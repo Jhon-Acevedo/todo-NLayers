@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.5.0</version>
         </dependency>
 
         <dependency>
@@ -131,7 +131,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>auth</finalName>
+        <finalName>todolist</finalName>
     </build>
 
 </project>
