@@ -4,29 +4,32 @@ server:
 spring:
   config:
     import: optional:file:.env[.properties]
-    datasource:
-      driver-class-name: org.postgresql.Driver
-      password: ${PG_PASSWORD}
-      url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}
-      username: ${PG_USER}
-      hikari:
-        schema: ${PG_DATABASE}
-    jpa:
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}
+    username: ${PG_USER}
+    password: ${PG_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: validate
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-          format_sql: true
-          jdbc:
-            lob:
-              non_contextual_creation: true
-      show-sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
 
 jwt:
-  secret: yourjwtsecretkey
-  expiration: 3600000
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
+springdoc:
+  swagger-ui:
+    use-root-path: true
 #logging:
 #  level:
 #    org.springframework: DEBUG
