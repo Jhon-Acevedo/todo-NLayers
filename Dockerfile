@@ -5,5 +5,5 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 
 FROM openjdk:17-slim
 COPY --from=build /home/app/target/todolist.jar /usr/local/lib/todolist.jar
-EXPOSE 8080
+EXPOSE 8000
 ENTRYPOINT ["java","-jar","/usr/local/lib/todolist.jar"]
