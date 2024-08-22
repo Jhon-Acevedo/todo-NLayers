@@ -2,6 +2,7 @@ package com.mindhub.todolist.configuration;
 
 import com.mindhub.todolist.models.UserEntity;
 import com.mindhub.todolist.repositories.IUserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -11,9 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private IUserRepository userRepository;
 
     @Override

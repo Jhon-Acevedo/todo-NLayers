@@ -1,29 +1,30 @@
 package com.mindhub.todolist.configuration;
 
-import com.mindhub.todolist.models.enums.RolEnum;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.micrometer.common.KeyValues;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class JwtUtils {
 
-    private final SecretKey secretKey;
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
 
     @Value("${jwt.expiration}")
-    private long expiration;
+    private long EXPIRATION;
 
-    public JwtUtils(@Value("${jwt.secret}") String secret) {
-        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+
+    public SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(String username, Map<String, Object> claims) {
@@ -31,8 +32,8 @@ public class JwtUtils {
                 .subject(username)
                 .claims(claims)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(secretKey)
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(getSignInKey())
                 .compact();
     }
 
@@ -56,7 +57,7 @@ public class JwtUtils {
 
     private Claims parseClaims(String token) {
         return Jwts.parser()
-                .verifyWith(secretKey)
+                .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

@@ -1,26 +1,35 @@
 server:
-  port: 8080
+  port: 8000
 
 spring:
   config:
     import: optional:file:.env[.properties]
+
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: ${PG_PASSWORD}
-    url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}?currentSchema=${PG_DATABASE}
+    url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}
     username: ${PG_USER}
+    password: ${PG_PASSWORD}
+
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: false
+        format_sql: true
         jdbc:
           lob:
             non_contextual_creation: true
-    show-sql: false
+    show-sql: true
 
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+#logging:
+#  level:
+#    org.springframework: DEBUG
